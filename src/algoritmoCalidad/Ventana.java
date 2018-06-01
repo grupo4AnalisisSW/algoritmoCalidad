@@ -27,6 +27,8 @@ import javax.swing.JEditorPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Ventana {
 
@@ -36,6 +38,21 @@ public class Ventana {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	
+	//Cosas a guardar para enviar
+	private int fun1;
+	private int fun2;
+	private int efi1;
+	private int efi2;
+	private int fia1;
+	private int fia2;
+	private int man1;
+	private int man2;
+	private int man3;
+	private int usa1;
+	private int usa2;
+	private int por1;
+	private int por2;
 
 	/**
 	 * Launch the application.
@@ -128,10 +145,22 @@ public class Ventana {
 		panelFunc.add(comboBox);
 		
 		JButton btnNewButton = new JButton("Siguiente");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fun1=calculadorDePuntajes.seguridadAcceso(chckbxNewCheckBox.isSelected(), chckbxInicioDeSesin.isSelected());
+				fun2=calculadorDePuntajes.exactitudResultados(comboBox.getSelectedIndex());
+				System.out.println(fun1+" "+fun2);
+			}
+		});
 		btnNewButton.setBounds(494, 293, 89, 23);
 		panelFunc.add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		btnCancelar.setBounds(52, 293, 89, 23);
 		panelFunc.add(btnCancelar);
 		
@@ -190,6 +219,11 @@ public class Ventana {
 		panelEfi.add(button);
 		
 		JButton button_1 = new JButton("Cancelar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_1.setBounds(52, 293, 89, 23);
 		panelEfi.add(button_1);
 		
@@ -268,6 +302,11 @@ public class Ventana {
 		panelFia.add(button_2);
 		
 		JButton button_3 = new JButton("Cancelar");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_3.setBounds(52, 293, 89, 23);
 		panelFia.add(button_3);
 		
@@ -319,6 +358,11 @@ public class Ventana {
 		panelMant.add(button_4);
 		
 		JButton button_5 = new JButton("Cancelar");
+		button_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_5.setBounds(52, 293, 89, 23);
 		panelMant.add(button_5);
 		
@@ -399,6 +443,11 @@ public class Ventana {
 		panelUsa.add(button_6);
 		
 		JButton button_7 = new JButton("Cancelar");
+		button_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_7.setBounds(52, 293, 89, 23);
 		panelUsa.add(button_7);
 		
@@ -505,6 +554,11 @@ public class Ventana {
 		panelPort.add(button_8);
 		
 		JButton button_9 = new JButton("Cancelar");
+		button_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_9.setBounds(52, 293, 89, 23);
 		panelPort.add(button_9);
 		
@@ -557,10 +611,20 @@ public class Ventana {
 		panelMant2.add(txtpnEvaleElPromedio);
 		
 		JButton button_10 = new JButton("Siguiente");
+		button_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		button_10.setBounds(494, 293, 89, 23);
 		panelMant2.add(button_10);
 		
 		JButton button_11 = new JButton("Cancelar");
+		button_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_11.setBounds(52, 293, 89, 23);
 		panelMant2.add(button_11);
 		
