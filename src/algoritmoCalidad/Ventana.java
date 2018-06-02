@@ -51,10 +51,10 @@ public class Ventana {
 	private int por1;
 	private int por2;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField textPorcentaje;
+	private JTextField textVG;
+	private JTextField textPasos;
+	private JTextField textProm;
 
 	/**
 	 * Launch the application.
@@ -227,13 +227,17 @@ public class Ventana {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					efi1=calculadorDePuntajes.utilizacionRecursos(comboBox_1.getSelectedIndex());
-					efi2=calculadorDePuntajes.comportamientoEnElTiempo(Integer.parseInt(textField.getText()));
-					System.out.println(efi1+" "+efi2);
-					CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
-					cl.next(VentanaPrincipal);
+					if(Integer.parseInt(textField.getText())>0 && Integer.parseInt(textField.getText())<Integer.MAX_VALUE) {
+						efi1=calculadorDePuntajes.utilizacionRecursos(comboBox_1.getSelectedIndex());
+						efi2=calculadorDePuntajes.comportamientoEnElTiempo(Integer.parseInt(textField.getText()));
+						System.out.println(efi1+" "+efi2);
+						CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
+						cl.next(VentanaPrincipal);
+					}
+				else JOptionPane.showMessageDialog(null, "Número invalido, debe ser mayor a 0", "Error", JOptionPane.INFORMATION_MESSAGE);
+					
 				}catch(Exception ex) {
-					JOptionPane.showMessageDialog(null, "Solo números en el campo de segundos", "InfoBox: " + "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Solo números en los campos", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -322,6 +326,9 @@ public class Ventana {
 		JButton button_4 = new JButton("Siguiente");
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				fia1=calculadorDePuntajes.toleranciaAFallos(chckbxSeProtegen.isSelected(), chckbxSeGuarda.isSelected());
+				fia2=calculadorDePuntajes.recuperacionErrores(comboBox_2.getSelectedIndex());
+				System.out.println(fia1+" "+fia2);
 				CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
 				cl.next(VentanaPrincipal);}
 		});
@@ -391,8 +398,21 @@ public class Ventana {
 		JButton button_6 = new JButton("Siguiente");
 		button_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
-				cl.next(VentanaPrincipal);}
+				try {
+					if(Integer.parseInt(textPorcentaje.getText())<=100 && Integer.parseInt(textPorcentaje.getText())>=0) {
+						if(Integer.parseInt(textVG.getText())>=1) {
+							man1=calculadorDePuntajes.serAnalizado(Integer.parseInt(textVG.getText()));
+							man2=calculadorDePuntajes.serCambiado(Integer.parseInt(textVG.getText()));
+							CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
+							cl.next(VentanaPrincipal);
+							}
+						else JOptionPane.showMessageDialog(null, "La complejidad ciclomatica debe ser un entero mayor a cero", "Error", JOptionPane.INFORMATION_MESSAGE);
+						}
+					else JOptionPane.showMessageDialog(null,Integer.parseInt(textPorcentaje.getText()) + "% no es un porcentaje valido", "Error", JOptionPane.INFORMATION_MESSAGE);
+				}catch(Exception ex) {
+					JOptionPane.showMessageDialog(null, "Solo números en los campos", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		});
 		button_6.setBounds(494, 293, 89, 23);
 		panel_4.add(button_6);
@@ -406,12 +426,12 @@ public class Ventana {
 		button_7.setBounds(52, 293, 89, 23);
 		panel_4.add(button_7);
 		
-		textField_1 = new JTextField();
-		textField_1.setText("0");
-		textField_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_1.setColumns(10);
-		textField_1.setBounds(83, 204, 86, 20);
-		panel_4.add(textField_1);
+		textPorcentaje = new JTextField();
+		textPorcentaje.setText("0");
+		textPorcentaje.setHorizontalAlignment(SwingConstants.RIGHT);
+		textPorcentaje.setColumns(10);
+		textPorcentaje.setBounds(83, 204, 86, 20);
+		panel_4.add(textPorcentaje);
 		
 		JLabel label_9 = new JLabel("%");
 		label_9.setBounds(179, 207, 46, 14);
@@ -421,11 +441,11 @@ public class Ventana {
 		label_10.setBounds(354, 207, 34, 14);
 		panel_4.add(label_10);
 		
-		textField_2 = new JTextField();
-		textField_2.setText("0");
-		textField_2.setColumns(10);
-		textField_2.setBounds(398, 204, 86, 20);
-		panel_4.add(textField_2);
+		textVG = new JTextField();
+		textVG.setText("0");
+		textVG.setColumns(10);
+		textVG.setBounds(398, 204, 86, 20);
+		panel_4.add(textVG);
 		
 		JPanel panel_4_1 = new JPanel();
 		panel_4_1.setLayout(null);
@@ -460,8 +480,17 @@ public class Ventana {
 		JButton button_12 = new JButton("Siguiente");
 		button_12.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
-				cl.next(VentanaPrincipal);}
+				try {
+					if(Double.parseDouble(textProm.getText())>=0) {
+						man3=calculadorDePuntajes.estabilidad(Double.parseDouble(textProm.getText()));
+						CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
+						cl.next(VentanaPrincipal);
+					}
+					else JOptionPane.showMessageDialog(null,"El valor debe ser mayor o igual a 0", "Error", JOptionPane.INFORMATION_MESSAGE);
+				}catch(Exception ex) {
+					JOptionPane.showMessageDialog(null, "Solo números en los campos", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		});
 		button_12.setBounds(494, 293, 89, 23);
 		panel_4_1.add(button_12);
@@ -475,12 +504,12 @@ public class Ventana {
 		button_13.setBounds(52, 293, 89, 23);
 		panel_4_1.add(button_13);
 		
-		textField_4 = new JTextField();
-		textField_4.setText("0");
-		textField_4.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_4.setColumns(10);
-		textField_4.setBounds(149, 201, 86, 20);
-		panel_4_1.add(textField_4);
+		textProm = new JTextField();
+		textProm.setText("0");
+		textProm.setHorizontalAlignment(SwingConstants.RIGHT);
+		textProm.setColumns(10);
+		textProm.setBounds(149, 201, 86, 20);
+		panel_4_1.add(textProm);
 		
 		JLabel label_24 = new JLabel("En promedio");
 		label_24.setBounds(252, 204, 135, 14);
@@ -524,36 +553,18 @@ public class Ventana {
 		textPane_9.setBounds(335, 104, 288, 24);
 		panel_5.add(textPane_9);
 		
-		JCheckBox checkBox_4 = new JCheckBox("Posee ayuda contextual.");
-		checkBox_4.setBounds(20, 179, 267, 23);
-		panel_5.add(checkBox_4);
+		JCheckBox checkBoxAyuda = new JCheckBox("Posee ayuda contextual.");
+		checkBoxAyuda.setBounds(20, 179, 267, 23);
+		panel_5.add(checkBoxAyuda);
 		
-		JCheckBox checkBox_5 = new JCheckBox("Manual de usuario incorporado al sistema como un men\u00FA dedicado.");
-		checkBox_5.setBounds(20, 218, 267, 23);
-		panel_5.add(checkBox_5);
+		JCheckBox checkBoxManual = new JCheckBox("Manual de usuario incorporado al sistema como un men\u00FA dedicado.");
+		checkBoxManual.setBounds(20, 218, 267, 23);
+		panel_5.add(checkBoxManual);
 		
 		JSeparator separator_9 = new JSeparator();
 		separator_9.setOrientation(SwingConstants.VERTICAL);
 		separator_9.setBounds(308, 126, 6, 146);
 		panel_5.add(separator_9);
-		
-		JButton button_8 = new JButton("Siguiente");
-		button_8.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
-				cl.next(VentanaPrincipal);}
-		});
-		button_8.setBounds(494, 293, 89, 23);
-		panel_5.add(button_8);
-		
-		JButton button_9 = new JButton("Cancelar");
-		button_9.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		button_9.setBounds(52, 293, 89, 23);
-		panel_5.add(button_9);
 		
 		JLabel label_13 = new JLabel("Persona 2: ");
 		label_13.setBounds(324, 167, 55, 14);
@@ -571,44 +582,64 @@ public class Ventana {
 		label_16.setBounds(324, 252, 55, 14);
 		panel_5.add(label_16);
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"lala"}));
-		comboBox_3.setSelectedIndex(0);
-		comboBox_3.setMaximumRowCount(3);
-		comboBox_3.setBounds(376, 136, 236, 20);
-		panel_5.add(comboBox_3);
+		JComboBox comboBoxP1 = new JComboBox();
+		comboBoxP1.setModel(new DefaultComboBoxModel(new String[] {"El usuario requiere consultar a personal especializado para operar el producto software", "El usuario requiere ayuda contextual y manual de uso para operar el producto software.", "El usuario opera el producto software sin asistencia."}));
+		comboBoxP1.setSelectedIndex(0);
+		comboBoxP1.setMaximumRowCount(3);
+		comboBoxP1.setBounds(376, 136, 236, 20);
+		panel_5.add(comboBoxP1);
 		
 		JLabel label_17 = new JLabel("Persona 1: ");
 		label_17.setBounds(324, 139, 55, 14);
 		panel_5.add(label_17);
 		
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"lala"}));
-		comboBox_4.setSelectedIndex(0);
-		comboBox_4.setMaximumRowCount(3);
-		comboBox_4.setBounds(376, 164, 236, 20);
-		panel_5.add(comboBox_4);
+		JComboBox comboBoxP2 = new JComboBox();
+		comboBoxP2.setModel(new DefaultComboBoxModel(new String[] {"El usuario requiere consultar a personal especializado para operar el producto software", "El usuario requiere ayuda contextual y manual de uso para operar el producto software.", "El usuario opera el producto software sin asistencia."}));
+		comboBoxP2.setSelectedIndex(0);
+		comboBoxP2.setMaximumRowCount(3);
+		comboBoxP2.setBounds(376, 164, 236, 20);
+		panel_5.add(comboBoxP2);
 		
-		JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"lala"}));
-		comboBox_5.setSelectedIndex(0);
-		comboBox_5.setMaximumRowCount(3);
-		comboBox_5.setBounds(376, 192, 236, 20);
-		panel_5.add(comboBox_5);
+		JComboBox comboBoxP3 = new JComboBox();
+		comboBoxP3.setModel(new DefaultComboBoxModel(new String[] {"El usuario requiere consultar a personal especializado para operar el producto software", "El usuario requiere ayuda contextual y manual de uso para operar el producto software.", "El usuario opera el producto software sin asistencia."}));
+		comboBoxP3.setSelectedIndex(0);
+		comboBoxP3.setMaximumRowCount(3);
+		comboBoxP3.setBounds(376, 192, 236, 20);
+		panel_5.add(comboBoxP3);
 		
-		JComboBox comboBox_6 = new JComboBox();
-		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"lala"}));
-		comboBox_6.setSelectedIndex(0);
-		comboBox_6.setMaximumRowCount(3);
-		comboBox_6.setBounds(376, 221, 236, 20);
-		panel_5.add(comboBox_6);
+		JComboBox comboBoxP4 = new JComboBox();
+		comboBoxP4.setModel(new DefaultComboBoxModel(new String[] {"El usuario requiere consultar a personal especializado para operar el producto software", "El usuario requiere ayuda contextual y manual de uso para operar el producto software.", "El usuario opera el producto software sin asistencia."}));
+		comboBoxP4.setSelectedIndex(0);
+		comboBoxP4.setMaximumRowCount(3);
+		comboBoxP4.setBounds(376, 221, 236, 20);
+		panel_5.add(comboBoxP4);
 		
-		JComboBox comboBox_7 = new JComboBox();
-		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"lala"}));
-		comboBox_7.setSelectedIndex(0);
-		comboBox_7.setMaximumRowCount(3);
-		comboBox_7.setBounds(376, 249, 236, 20);
-		panel_5.add(comboBox_7);
+		JComboBox comboBoxP5 = new JComboBox();
+		comboBoxP5.setModel(new DefaultComboBoxModel(new String[] {"El usuario requiere consultar a personal especializado para operar el producto software", "El usuario requiere ayuda contextual y manual de uso para operar el producto software.", "El usuario opera el producto software sin asistencia."}));
+		comboBoxP5.setSelectedIndex(0);
+		comboBoxP5.setMaximumRowCount(3);
+		comboBoxP5.setBounds(376, 249, 236, 20);
+		panel_5.add(comboBoxP5);
+		
+		JButton button_8 = new JButton("Siguiente");
+		button_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				usa1=calculadorDePuntajes.serEntendido(checkBoxAyuda.isSelected(), checkBoxManual.isSelected());
+				usa2=calculadorDePuntajes.serOperado(comboBoxP1.getSelectedIndex(), comboBoxP2.getSelectedIndex(), comboBoxP3.getSelectedIndex(), comboBoxP4.getSelectedIndex(), comboBoxP5.getSelectedIndex());
+				CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
+				cl.next(VentanaPrincipal);}
+		});
+		button_8.setBounds(494, 293, 89, 23);
+		panel_5.add(button_8);
+		
+		JButton button_9 = new JButton("Cancelar");
+		button_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		button_9.setBounds(52, 293, 89, 23);
+		panel_5.add(button_9);
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setLayout(null);
@@ -653,9 +684,31 @@ public class Ventana {
 		separator_11.setBounds(308, 126, 6, 146);
 		panel_6.add(separator_11);
 		
+		JComboBox comboBoxSO = new JComboBox();
+		comboBoxSO.setModel(new DefaultComboBoxModel(new String[] {"Uno", "Dos", "Tres o mas"}));
+		comboBoxSO.setSelectedIndex(0);
+		comboBoxSO.setBounds(10, 204, 221, 20);
+		panel_6.add(comboBoxSO);
+		
 		JButton button_10 = new JButton("Siguiente");
 		button_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					if(Integer.parseInt(textPasos.getText())>0) {
+						efi1=calculadorDePuntajes.adaptabilidad(comboBoxSO.getSelectedIndex());
+						efi2=calculadorDePuntajes.instalabilidad(Integer.parseInt(textPasos.getText()));
+						
+						//Hacemos los calculos correspondientes
+						
+						//Recien despues swapeamos la ventana
+						CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
+						cl.next(VentanaPrincipal);
+					}
+				else 
+					JOptionPane.showMessageDialog(null, "Número invalido, debe ser mayor a 0", "Error", JOptionPane.INFORMATION_MESSAGE);
+				}catch(Exception ex) {
+					JOptionPane.showMessageDialog(null, "Solo números en los campos", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		button_10.setBounds(494, 293, 89, 23);
@@ -670,22 +723,29 @@ public class Ventana {
 		button_11.setBounds(52, 293, 89, 23);
 		panel_6.add(button_11);
 		
-		JComboBox comboBox_8 = new JComboBox();
-		comboBox_8.setModel(new DefaultComboBoxModel(new String[] {"lala"}));
-		comboBox_8.setBounds(10, 204, 221, 20);
-		panel_6.add(comboBox_8);
-		
 		JLabel label_20 = new JLabel("SO's");
 		label_20.setBounds(237, 207, 46, 14);
 		panel_6.add(label_20);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(324, 204, 86, 20);
-		panel_6.add(textField_3);
+		textPasos = new JTextField();
+		textPasos.setText("0");
+		textPasos.setColumns(10);
+		textPasos.setBounds(324, 204, 86, 20);
+		panel_6.add(textPasos);
 		
 		JLabel label_21 = new JLabel("Pasos de instalaci\u00F3n");
 		label_21.setBounds(420, 207, 163, 14);
 		panel_6.add(label_21);
+		
+		JPanel panel_final = new JPanel();
+		panel_final.setLayout(null);
+		VentanaPrincipal.add(panel_final, "name_686783464679424");
+		
+		JLabel label_25 = new JLabel("Algoritmo de Calidad");
+		label_25.setHorizontalAlignment(SwingConstants.CENTER);
+		label_25.setForeground(Color.BLACK);
+		label_25.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		label_25.setBounds(170, 11, 267, 47);
+		panel_final.add(label_25);
 	}
 }
