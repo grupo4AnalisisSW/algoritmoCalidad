@@ -13,6 +13,8 @@ import java.awt.Font;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
+
 import java.awt.CardLayout;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -143,7 +145,7 @@ public class Ventana {
 		panel_1.add(separator_1);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"lala"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Cero", "Uno", "Mas de uno"}));
 		comboBox.setSelectedIndex(0);
 		comboBox.setMaximumRowCount(3);
 		comboBox.setBounds(361, 204, 133, 20);
@@ -152,6 +154,9 @@ public class Ventana {
 		JButton button = new JButton("Siguiente");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				fun1=calculadorDePuntajes.seguridadAcceso(checkBox.isSelected(), checkBox_1.isSelected());
+				fun2=calculadorDePuntajes.exactitudResultados(comboBox.getSelectedIndex());
+				System.out.println(fun1+" "+fun2);
 				CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
 				cl.next(VentanaPrincipal);
 			}
@@ -160,6 +165,11 @@ public class Ventana {
 		panel_1.add(button);
 		
 		JButton button_1 = new JButton("Cancelar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		button_1.setBounds(52, 293, 89, 23);
 		panel_1.add(button_1);
 		
@@ -207,7 +217,7 @@ public class Ventana {
 		panel_2.add(separator_3);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"lala"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Mayor a N^2", "N^2", "Menor a N^2"}));
 		comboBox_1.setSelectedIndex(0);
 		comboBox_1.setMaximumRowCount(3);
 		comboBox_1.setBounds(10, 207, 259, 20);
@@ -216,14 +226,26 @@ public class Ventana {
 		JButton button_2 = new JButton("Siguiente");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
-				cl.next(VentanaPrincipal);
+				try {
+					efi1=calculadorDePuntajes.utilizacionRecursos(comboBox_1.getSelectedIndex());
+					efi2=calculadorDePuntajes.comportamientoEnElTiempo(Integer.parseInt(textField.getText()));
+					System.out.println(efi1+" "+efi2);
+					CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
+					cl.next(VentanaPrincipal);
+				}catch(Exception ex) {
+					JOptionPane.showMessageDialog(null, "Solo números en el campo de segundos", "InfoBox: " + "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		button_2.setBounds(494, 293, 89, 23);
 		panel_2.add(button_2);
 		
 		JButton button_3 = new JButton("Cancelar");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_3.setBounds(52, 293, 89, 23);
 		panel_2.add(button_3);
 		
@@ -276,14 +298,14 @@ public class Ventana {
 		textPane_5.setBounds(324, 125, 288, 47);
 		panel_3.add(textPane_5);
 		
-		JCheckBox checkBox_2 = new JCheckBox("... se protegen los datos procesados.");
-		checkBox_2.setBounds(20, 179, 267, 23);
-		panel_3.add(checkBox_2);
+		JCheckBox chckbxSeProtegen = new JCheckBox("   ... se protegen los datos procesados.");
+		chckbxSeProtegen.setBounds(20, 179, 267, 23);
+		panel_3.add(chckbxSeProtegen);
 		
-		JCheckBox checkBox_3 = new JCheckBox("... se guarda un log con las actividades que el sistema estaba llevando a cabo.");
-		checkBox_3.setVerticalAlignment(SwingConstants.TOP);
-		checkBox_3.setBounds(20, 218, 278, 24);
-		panel_3.add(checkBox_3);
+		JCheckBox chckbxSeGuarda = new JCheckBox("... se guarda un log con las actividades que el sistema estaba llevando a cabo.");
+		chckbxSeGuarda.setVerticalAlignment(SwingConstants.TOP);
+		chckbxSeGuarda.setBounds(20, 218, 22, 24);
+		panel_3.add(chckbxSeGuarda);
 		
 		JSeparator separator_5 = new JSeparator();
 		separator_5.setOrientation(SwingConstants.VERTICAL);
@@ -291,10 +313,10 @@ public class Ventana {
 		panel_3.add(separator_5);
 		
 		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"lala"}));
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"No se recupera automaticamente", "Reanuda las actividades si se produce una falla cr\u00EDtica.", "Reanuda sus actividades y vuelve al estado en que estaba."}));
 		comboBox_2.setSelectedIndex(0);
 		comboBox_2.setMaximumRowCount(3);
-		comboBox_2.setBounds(324, 203, 288, 20);
+		comboBox_2.setBounds(324, 203, 288, 24);
 		panel_3.add(comboBox_2);
 		
 		JButton button_4 = new JButton("Siguiente");
@@ -307,8 +329,21 @@ public class Ventana {
 		panel_3.add(button_4);
 		
 		JButton button_5 = new JButton("Cancelar");
+		button_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_5.setBounds(52, 293, 89, 23);
 		panel_3.add(button_5);
+		
+		JTextPane txtpnSeGuarda = new JTextPane();
+		txtpnSeGuarda.setText("... se guarda un log con las actividades que el sistema estaba llevando a cabo.");
+		txtpnSeGuarda.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtpnSeGuarda.setEditable(false);
+		txtpnSeGuarda.setBackground(SystemColor.menu);
+		txtpnSeGuarda.setBounds(48, 218, 250, 47);
+		panel_3.add(txtpnSeGuarda);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(null);
@@ -363,6 +398,11 @@ public class Ventana {
 		panel_4.add(button_6);
 		
 		JButton button_7 = new JButton("Cancelar");
+		button_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_7.setBounds(52, 293, 89, 23);
 		panel_4.add(button_7);
 		
@@ -427,6 +467,11 @@ public class Ventana {
 		panel_4_1.add(button_12);
 		
 		JButton button_13 = new JButton("Cancelar");
+		button_13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_13.setBounds(52, 293, 89, 23);
 		panel_4_1.add(button_13);
 		
@@ -502,6 +547,11 @@ public class Ventana {
 		panel_5.add(button_8);
 		
 		JButton button_9 = new JButton("Cancelar");
+		button_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_9.setBounds(52, 293, 89, 23);
 		panel_5.add(button_9);
 		
@@ -612,6 +662,11 @@ public class Ventana {
 		panel_6.add(button_10);
 		
 		JButton button_11 = new JButton("Cancelar");
+		button_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button_11.setBounds(52, 293, 89, 23);
 		panel_6.add(button_11);
 		
