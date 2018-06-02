@@ -697,9 +697,8 @@ public class Ventana {
 					if(Integer.parseInt(textPasos.getText())>0) {
 						efi1=calculadorDePuntajes.adaptabilidad(comboBoxSO.getSelectedIndex());
 						efi2=calculadorDePuntajes.instalabilidad(Integer.parseInt(textPasos.getText()));
-						
 						//Hacemos los calculos correspondientes
-						
+						Evaluacion eva=new Evaluacion(fun1,fun2,efi1,efi2,fia1,fia2,man1,man2,man3,usa1,usa2,por1,por2);
 						//Recien despues swapeamos la ventana
 						CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
 						cl.next(VentanaPrincipal);
