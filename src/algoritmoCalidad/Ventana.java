@@ -56,6 +56,7 @@ public class Ventana {
 	private JTextField textPasos;
 	private JTextField textProm;
 	private JTextField textFieldSO;
+	
 
 	/**
 	 * Launch the application.
@@ -740,6 +741,40 @@ public class Ventana {
 		labelCalidad.setBounds(72, 225, 489, 53);
 		panel_final_exito.add(labelCalidad);
 		
+		JPanel panel_final_fallo = new JPanel();
+		panel_final_fallo.setLayout(null);
+		VentanaPrincipal.add(panel_final_fallo, "name_747914680870035");
+		
+		JTextArea campoA = new JTextArea();
+		campoA.setEditable(false);
+		campoA.setBackground(SystemColor.menu);
+		campoA.setText("prueba");
+		campoA.setLineWrap(true);
+		campoA.setWrapStyleWord(true);
+		campoA.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		campoA.setBounds(28, 177, 162, 131);
+		panel_final_fallo.add(campoA);
+		
+		JTextArea campoC = new JTextArea();
+		campoC.setEditable(false);
+		campoC.setBackground(SystemColor.menu);
+		campoC.setText("prueba3\r\n\r\nasd");
+		campoC.setLineWrap(true);
+		campoC.setWrapStyleWord(true);
+		campoC.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		campoC.setBounds(434, 177, 162, 131);
+		panel_final_fallo.add(campoC);
+		
+		JTextArea campoB = new JTextArea();
+		campoB.setEditable(false);
+		campoB.setBackground(SystemColor.menu);
+		campoB.setText("prueba2");
+		campoB.setLineWrap(true);
+		campoB.setWrapStyleWord(true);
+		campoB.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		campoB.setBounds(235, 177, 162, 131);
+		panel_final_fallo.add(campoB);
+		
 		JButton button_10 = new JButton("Siguiente");
 		button_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -752,13 +787,53 @@ public class Ventana {
 						Evaluacion eva=new Evaluacion(fun1,fun2,efi1,efi2,fia1,fia2,man1,man2,man3,usa1,usa2,por1,por2);
 						
 						if(eva.esSatisfactorio()) {
-							labelCalidad.setText("Porcentaje de calidad alcanzado: "+eva.getCalidad()*100+"%");
+							labelCalidad.setText("Porcentaje de calidad alcanzado: "+String.format("%.2f", (eva.getCalidad()*100))+"%");
+							//Final swap
 							CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
 							cl.next(VentanaPrincipal);
 						}
-						//Recien despues swapeamos la ventana
-						//CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
-						//cl.next(VentanaPrincipal);
+						else {
+							//Primero setea la ventana de porcentaje
+							if(eva.getCalidad()>0.5)
+								campoA.setText("Tu programa logra cumplir el porcentaje mínimo: \n"+String.format("%.2f", (eva.getCalidad()*100))+"% de calidad");
+							else campoA.setText("Tu programa no logra cumplir el porcentaje mínimo: \nSolamente "+String.format("%.2f", (eva.getCalidad()*100))+"% de calidad (minimo de 50% para pasar)");
+							//Luego setea la ventana de caracteristicas
+							boolean caracFail=false;
+							int i=0;
+							String failedCaracsText="Tu porgrama falló en las siguientes caracteristicas: ";
+							String succesfulCaracsText="Tu programa no falló en ninguna caracteristica del todo";
+							String[] caracs= {"Funcionalidad","Eficiencia","Fiabilidad","Mantenibilidad","Usabilidad","Portabilidad"};
+							for(boolean carac:eva.getCaracsEn0()) {
+								if (carac==true) {
+									caracFail=true;
+									failedCaracsText=failedCaracsText.concat("\n"+caracs[i]);
+								}
+								i++;
+							}
+							if(caracFail)
+								campoB.setText(failedCaracsText);
+							else campoB.setText(succesfulCaracsText);
+							//Por ultimo, la de subs
+							boolean subCaracFail=false;
+							i=0;
+							String failedSubCaracsText="Tu porgrama falló en las siguientes subcaracteristicas críticas: ";
+							String succesfulSubCaracsText="Tu programa no falló en ninguna subcaracteristica crítica";
+							String[] subCaracs= {"Exactitud de Resultados","Tolerancia a fallos"};
+							for(boolean subCarac:eva.getSubcaracsEn0()) {
+								if (subCarac==true) {
+									subCaracFail=true;
+									failedSubCaracsText=failedSubCaracsText.concat("\n"+subCaracs[i]);
+								}
+								i++;
+							}
+							if(subCaracFail)
+								campoC.setText(failedSubCaracsText);
+							else campoC.setText(succesfulSubCaracsText);
+							//Final swap
+							CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
+							cl.next(VentanaPrincipal);
+							cl.next(VentanaPrincipal);
+						}
 					}
 				else 
 					JOptionPane.showMessageDialog(null, "Número invalido, debe ser mayor a 0", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -776,5 +851,26 @@ public class Ventana {
 		textFieldSO.setColumns(10);
 		textFieldSO.setBounds(26, 204, 201, 20);
 		panel_6.add(textFieldSO);
+		
+		
+		JLabel label_26 = new JLabel("Algoritmo de Calidad");
+		label_26.setHorizontalAlignment(SwingConstants.CENTER);
+		label_26.setForeground(Color.BLACK);
+		label_26.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		label_26.setBounds(170, 11, 267, 47);
+		panel_final_fallo.add(label_26);
+		
+		JLabel lblFallo = new JLabel("Fallo!");
+		lblFallo.setForeground(new Color(178, 34, 34));
+		lblFallo.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 60));
+		lblFallo.setBounds(216, 33, 168, 100);
+		panel_final_fallo.add(lblFallo);
+		
+		JLabel lblTuProgramaNo = new JLabel("Tu programa no cumple con los requisitos m\u00EDnimos de calidad!");
+		lblTuProgramaNo.setForeground(Color.BLACK);
+		lblTuProgramaNo.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		lblTuProgramaNo.setBounds(66, 104, 508, 53);
+		panel_final_fallo.add(lblTuProgramaNo);
+		
 	}
 }
