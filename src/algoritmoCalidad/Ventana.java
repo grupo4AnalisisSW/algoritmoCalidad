@@ -55,6 +55,7 @@ public class Ventana {
 	private JTextField textVG;
 	private JTextField textPasos;
 	private JTextField textProm;
+	private JTextField textFieldSO;
 
 	/**
 	 * Launch the application.
@@ -401,8 +402,9 @@ public class Ventana {
 				try {
 					if(Integer.parseInt(textPorcentaje.getText())<=100 && Integer.parseInt(textPorcentaje.getText())>=0) {
 						if(Integer.parseInt(textVG.getText())>=1) {
-							man1=calculadorDePuntajes.serAnalizado(Integer.parseInt(textVG.getText()));
+							man1=calculadorDePuntajes.serAnalizado(Integer.parseInt(textPorcentaje.getText()));
 							man2=calculadorDePuntajes.serCambiado(Integer.parseInt(textVG.getText()));
+							System.out.println(man1+" "+man2);
 							CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
 							cl.next(VentanaPrincipal);
 							}
@@ -483,6 +485,7 @@ public class Ventana {
 				try {
 					if(Double.parseDouble(textProm.getText())>=0) {
 						man3=calculadorDePuntajes.estabilidad(Double.parseDouble(textProm.getText()));
+						System.out.println(man3);
 						CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
 						cl.next(VentanaPrincipal);
 					}
@@ -626,6 +629,7 @@ public class Ventana {
 			public void actionPerformed(ActionEvent e) {
 				usa1=calculadorDePuntajes.serEntendido(checkBoxAyuda.isSelected(), checkBoxManual.isSelected());
 				usa2=calculadorDePuntajes.serOperado(comboBoxP1.getSelectedIndex(), comboBoxP2.getSelectedIndex(), comboBoxP3.getSelectedIndex(), comboBoxP4.getSelectedIndex(), comboBoxP5.getSelectedIndex());
+				System.out.println(usa1+" "+usa2);
 				CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
 				cl.next(VentanaPrincipal);}
 		});
@@ -684,35 +688,6 @@ public class Ventana {
 		separator_11.setBounds(308, 126, 6, 146);
 		panel_6.add(separator_11);
 		
-		JComboBox comboBoxSO = new JComboBox();
-		comboBoxSO.setModel(new DefaultComboBoxModel(new String[] {"Uno", "Dos", "Tres o mas"}));
-		comboBoxSO.setSelectedIndex(0);
-		comboBoxSO.setBounds(10, 204, 221, 20);
-		panel_6.add(comboBoxSO);
-		
-		JButton button_10 = new JButton("Siguiente");
-		button_10.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if(Integer.parseInt(textPasos.getText())>0) {
-						efi1=calculadorDePuntajes.adaptabilidad(comboBoxSO.getSelectedIndex());
-						efi2=calculadorDePuntajes.instalabilidad(Integer.parseInt(textPasos.getText()));
-						//Hacemos los calculos correspondientes
-						Evaluacion eva=new Evaluacion(fun1,fun2,efi1,efi2,fia1,fia2,man1,man2,man3,usa1,usa2,por1,por2);
-						//Recien despues swapeamos la ventana
-						CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
-						cl.next(VentanaPrincipal);
-					}
-				else 
-					JOptionPane.showMessageDialog(null, "Número invalido, debe ser mayor a 0", "Error", JOptionPane.INFORMATION_MESSAGE);
-				}catch(Exception ex) {
-					JOptionPane.showMessageDialog(null, "Solo números en los campos", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		button_10.setBounds(494, 293, 89, 23);
-		panel_6.add(button_10);
-		
 		JButton button_11 = new JButton("Cancelar");
 		button_11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -736,15 +711,70 @@ public class Ventana {
 		label_21.setBounds(420, 207, 163, 14);
 		panel_6.add(label_21);
 		
-		JPanel panel_final = new JPanel();
-		panel_final.setLayout(null);
-		VentanaPrincipal.add(panel_final, "name_686783464679424");
+		JPanel panel_final_exito = new JPanel();
+		panel_final_exito.setLayout(null);
+		VentanaPrincipal.add(panel_final_exito, "name_686783464679424");
 		
 		JLabel label_25 = new JLabel("Algoritmo de Calidad");
 		label_25.setHorizontalAlignment(SwingConstants.CENTER);
 		label_25.setForeground(Color.BLACK);
 		label_25.setFont(new Font("Times New Roman", Font.PLAIN, 30));
 		label_25.setBounds(170, 11, 267, 47);
-		panel_final.add(label_25);
+		panel_final_exito.add(label_25);
+		
+		JLabel lblExito = new JLabel("\u00C9xito!");
+		lblExito.setForeground(new Color(0, 128, 0));
+		lblExito.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 86));
+		lblExito.setBounds(194, 36, 223, 143);
+		panel_final_exito.add(lblExito);
+		
+		JLabel lblTuProgramaCumple = new JLabel("Tu programa cumple con los requisitos m\u00EDnimos de calidad!");
+		lblTuProgramaCumple.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		lblTuProgramaCumple.setForeground(new Color(0, 0, 0));
+		lblTuProgramaCumple.setBounds(72, 145, 489, 53);
+		panel_final_exito.add(lblTuProgramaCumple);
+		
+		JLabel labelCalidad = new JLabel("");
+		labelCalidad.setForeground(Color.BLACK);
+		labelCalidad.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		labelCalidad.setBounds(72, 225, 489, 53);
+		panel_final_exito.add(labelCalidad);
+		
+		JButton button_10 = new JButton("Siguiente");
+		button_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(Integer.parseInt(textPasos.getText())>0 && Integer.parseInt(textFieldSO.getText())>0) {
+						por1=calculadorDePuntajes.adaptabilidad(Integer.parseInt(textFieldSO.getText()));
+						por2=calculadorDePuntajes.instalabilidad(Integer.parseInt(textPasos.getText()));
+						System.out.println(por1+" "+por2);
+						//Hacemos los calculos correspondientes
+						Evaluacion eva=new Evaluacion(fun1,fun2,efi1,efi2,fia1,fia2,man1,man2,man3,usa1,usa2,por1,por2);
+						
+						if(eva.esSatisfactorio()) {
+							labelCalidad.setText("Porcentaje de calidad alcanzado: "+eva.getCalidad()*100+"%");
+							CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
+							cl.next(VentanaPrincipal);
+						}
+						//Recien despues swapeamos la ventana
+						//CardLayout cl = (CardLayout) (VentanaPrincipal.getLayout());
+						//cl.next(VentanaPrincipal);
+					}
+				else 
+					JOptionPane.showMessageDialog(null, "Número invalido, debe ser mayor a 0", "Error", JOptionPane.INFORMATION_MESSAGE);
+				}catch(Exception ex) {
+					JOptionPane.showMessageDialog(null, "Solo números en los campos", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		button_10.setBounds(494, 293, 89, 23);
+		panel_6.add(button_10);
+		
+		textFieldSO = new JTextField();
+		textFieldSO.setHorizontalAlignment(SwingConstants.RIGHT);
+		textFieldSO.setText("0");
+		textFieldSO.setColumns(10);
+		textFieldSO.setBounds(26, 204, 201, 20);
+		panel_6.add(textFieldSO);
 	}
 }

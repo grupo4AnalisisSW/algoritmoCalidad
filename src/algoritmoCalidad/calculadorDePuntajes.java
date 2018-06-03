@@ -92,7 +92,7 @@ public class calculadorDePuntajes {
 	 * 2: no requiere asistencia
 	 */
 	public static int serOperado(int usr1, int usr2, int usr3, int usr4, int usr5) {
-		double promedio = (usr1+usr2+usr3+usr4+usr5)/5;
+		double promedio = ((double)usr1+usr2+usr3+usr4+usr5)/5; //Acá estaba haciendo división entera, le hice un hotfix, arreglenlo bien
 		if(promedio <= 0.5)
 			return Evaluacion.MALA;
 		if(promedio <= 1.5)

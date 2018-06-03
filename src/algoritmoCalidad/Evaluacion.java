@@ -82,13 +82,13 @@ public class Evaluacion {
 		double numerador = 0;
 		double denominador = 0;
 		for(int i=0; i<6; i++) {
-			numerador += caracs[i] * pesos[i];
+			numerador += (caracs[i] * pesos[i]);
 			denominador += pesos[i];
 		}
 		double ponderacion = numerador/denominador;
 		
 		//Calculo el porcentaje
-		return ponderacion / 2; //Ponderacion puede valer entre 0 y 2, segun las constantes BUENA, REGULAR y MALA
+		return ponderacion;// / 2; //Ponderacion puede valer entre 0 y 2, segun las constantes BUENA, REGULAR y MALA //no hace falta dividirlo por 2
 	}
 
 	/**
@@ -110,12 +110,12 @@ public class Evaluacion {
 			int serEntendido, int serOperado, int adaptabilidad, int instalabilidad) {
 		
 		//Calculo las caracteristicas a partir de los promedios
-		caracs[FUNCIONALIDAD] = (segAcceso + exactitudRes)/2;
-		caracs[EFICIENCIA] = (utilRecursos + compEnTiempo)/2;
-		caracs[FIABILIDAD] = (toleranciaFallos + capacidadRecuperacionErr)/2;
-		caracs[MANTENIBILIDAD] = (analizarCod + cambiarCod + estabilidad)/3;
-		caracs[USABILIDAD] = (serEntendido + serOperado)/2;
-		caracs[PORTABILIDAD] = (adaptabilidad + instalabilidad)/2;
+		caracs[FUNCIONALIDAD] = ((double)segAcceso + exactitudRes)/4; //mas temas de tipo de dato
+		caracs[EFICIENCIA] = ((double)utilRecursos + compEnTiempo)/4; //ademas, se debían dividir por el total posible, arreglado
+		caracs[FIABILIDAD] = ((double)toleranciaFallos + capacidadRecuperacionErr)/4;
+		caracs[MANTENIBILIDAD] = ((double)analizarCod + cambiarCod + estabilidad)/6;
+		caracs[USABILIDAD] = ((double)serEntendido + serOperado)/4;
+		caracs[PORTABILIDAD] = ((double)adaptabilidad + instalabilidad)/4;
 	}
 	
 	public boolean esSatisfactorio() {
