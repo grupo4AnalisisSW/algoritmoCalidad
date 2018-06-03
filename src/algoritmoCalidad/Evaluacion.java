@@ -77,7 +77,7 @@ public class Evaluacion {
 	 * Pondera los valores de las caracteristicas y calcula el porcentaje de calidad.
 	 * @return porcentaje de calidad (numero entre 0 y 1)
 	 */
-	private double calcularCalidad() {
+	private double calcularCalidad() { //me tomo la libertad de rediseï¿½ar esto, porque no funciona asï¿½(y tampoco entiendo que se buscï¿½ calcular)
 		//Pondero el resultado
 		double numerador = 0;
 		double denominador = 0;
@@ -111,7 +111,7 @@ public class Evaluacion {
 		
 		//Calculo las caracteristicas a partir de los promedios
 		caracs[FUNCIONALIDAD] = ((double)segAcceso + exactitudRes)/4; //mas temas de tipo de dato
-		caracs[EFICIENCIA] = ((double)utilRecursos + compEnTiempo)/4; //ademas, se debían dividir por el total posible, arreglado
+		caracs[EFICIENCIA] = ((double)utilRecursos + compEnTiempo)/4; //ademas, se debï¿½an dividir por el total posible, arreglado
 		caracs[FIABILIDAD] = ((double)toleranciaFallos + capacidadRecuperacionErr)/4;
 		caracs[MANTENIBILIDAD] = ((double)analizarCod + cambiarCod + estabilidad)/6;
 		caracs[USABILIDAD] = ((double)serEntendido + serOperado)/4;
@@ -128,7 +128,7 @@ public class Evaluacion {
 	
 	/**
 	 * Arma un array booleano que se accede con las constantes de las caracteristicas como indices
-	 * y por cada una dice si está en 0 o no.
+	 * y por cada una dice si estï¿½ en 0 o no.
 	 * @return
 	 */
 	public boolean[] getCaracsEn0() {
@@ -142,7 +142,7 @@ public class Evaluacion {
 	
 	/**
 	 * Arma un array booleano que se accede con las constantes de las subcaracteristicas como indices
-	 * y por cada una dice si está en 0 o no.
+	 * y por cada una dice si estï¿½ en 0 o no.
 	 * @return
 	 */
 	public boolean[] getSubcaracsEn0() {
