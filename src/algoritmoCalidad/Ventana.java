@@ -86,7 +86,7 @@ public class Ventana {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 649, 366);
+		frame.setBounds(100, 100, 649, 383);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -376,21 +376,21 @@ public class Ventana {
 		separator_6.setBounds(10, 101, 602, 13);
 		panel_4.add(separator_6);
 		
-		JTextPane textPane_6 = new JTextPane();
-		textPane_6.setText("Calcule el porcentaje de l\u00EDneas de c\u00F3digo por m\u00E9todo y luego calcule el promedio");
-		textPane_6.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		textPane_6.setEditable(false);
-		textPane_6.setBackground(SystemColor.menu);
-		textPane_6.setBounds(10, 125, 288, 47);
-		panel_4.add(textPane_6);
+		JTextPane txtpnCalculeElPorcentaje = new JTextPane();
+		txtpnCalculeElPorcentaje.setText("Calcule el porcentaje de comentarios sobre l\u00EDneas de c\u00F3digo por m\u00E9todo y luego calcule el promedio.");
+		txtpnCalculeElPorcentaje.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		txtpnCalculeElPorcentaje.setEditable(false);
+		txtpnCalculeElPorcentaje.setBackground(SystemColor.menu);
+		txtpnCalculeElPorcentaje.setBounds(10, 125, 288, 66);
+		panel_4.add(txtpnCalculeElPorcentaje);
 		
-		JTextPane textPane_7 = new JTextPane();
-		textPane_7.setText("Capacidad del c\u00F3digo para ser cambiado, seg\u00FAn la complejidad ciclom\u00E1tica");
-		textPane_7.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		textPane_7.setEditable(false);
-		textPane_7.setBackground(SystemColor.menu);
-		textPane_7.setBounds(324, 125, 288, 47);
-		panel_4.add(textPane_7);
+		JTextPane txtpnCalculeLaComplejidad = new JTextPane();
+		txtpnCalculeLaComplejidad.setText("Calcule la complejidad ciclom\u00E1tica de cada m\u00E9todo y escriba la del peor caso.");
+		txtpnCalculeLaComplejidad.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		txtpnCalculeLaComplejidad.setEditable(false);
+		txtpnCalculeLaComplejidad.setBackground(SystemColor.menu);
+		txtpnCalculeLaComplejidad.setBounds(324, 125, 288, 47);
+		panel_4.add(txtpnCalculeLaComplejidad);
 		
 		JSeparator separator_7 = new JSeparator();
 		separator_7.setOrientation(SwingConstants.VERTICAL);
@@ -441,7 +441,7 @@ public class Ventana {
 		panel_4.add(label_9);
 		
 		JLabel label_10 = new JLabel("V(G)=");
-		label_10.setBounds(354, 207, 34, 14);
+		label_10.setBounds(342, 207, 46, 14);
 		panel_4.add(label_10);
 		
 		textVG = new JTextField();
